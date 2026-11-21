@@ -3,6 +3,8 @@
 **ABES Engineering College | MCA 2nd Year | Data Analyst skill track**  
 An end-to-end, reproducible analysis of loan disbursement transactions using pandas, NumPy, Matplotlib, Seaborn, Plotly, and Jupyter/Colab. CSV summaries are prepared for Power BI or Tableau.
 
+**Suggested duration:** 40 hours across 3 sprints · **Primary users:** Branch Manager and Risk & Operations Head.
+
 ## Dataset and definitions
 
 Without `--input`, the project generates 12,000 synthetic transaction records for 2021–2025. The data is illustrative and does not represent real customers or a real lender. Fields follow the project brief: transaction/customer/account/branch IDs, transaction date/type, channel, amount, status/failure reason, loan ID/type, and delinquency flag. `event_type` is an additional convenience field in the generated sample.
@@ -36,6 +38,7 @@ The notebook at `notebooks/loan_disbursement_analysis.ipynb` documents loading, 
 - `outputs/loan_disbursement_trends.png` — static EDA chart.
 - `outputs/loan_disbursement_dashboard.html` — filterable dashboard with year, loan type, branch, and channel filters.
 - `outputs/insight_report.md` — KPIs, findings, recommendations, cleaning notes, and limitations.
+- `outputs/presentation.html` — browser-ready slide presentation; use arrow keys to navigate.
 - `outputs/data_quality.json` — input/cleaned row counts and source metadata.
 
 ## KPIs

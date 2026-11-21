@@ -251,6 +251,31 @@ The sample data is generated for demonstration and has no real-world evidentiary
     (OUTPUT_DIR / "insight_report.md").write_text(text, encoding="utf-8")
 
 
+def create_presentation(df: pd.DataFrame, tables: dict[str, pd.DataFrame]) -> None:
+    total = df.loc[df.is_disbursement, "amount"].sum()
+    count = int(df.is_disbursement.sum())
+    rate = 100 * df.is_success.mean() if len(df) else 0
+    monthly = tables["monthly"]
+    peak = monthly.loc[monthly.disbursed_amount.idxmax()] if len(monthly) else None
+    loan_types = tables["loan_type"].head(5)
+    type_rows = "".join(f"<tr><td>{r.loan_type}</td><td>{int(r.disbursement_count):,}</td><td>INR {r.disbursed_amount:,.0f}</td></tr>" for r in loan_types.itertuples())
+    peak_text = f"{peak.month:%B %Y}: INR {peak.disbursed_amount:,.0f}" if peak is not None else "No disbursement records"
+    slide = r'''<section class="slide title"><div class="tag">D17 · Banking & Finance</div><h1>Loan Disbursement<br>Trend Analysis</h1><p>ABES Engineering College · MCA 2nd Year · Data Analyst</p><small>Synthetic transaction data · 2021–2025</small></section>
+<section class="slide"><div class="tag">01 · Purpose</div><h2>What we set out to learn</h2><ul><li>How successful disbursement amounts and counts change over time</li><li>How disbursement volume differs by loan type, branch and channel</li><li>What operational and data quality questions to investigate next</li></ul><p class="callout">A successful credit transaction is used as the disbursement proxy because the suggested fields do not identify a separate booking event.</p></section>
+<section class="slide"><div class="tag">02 · Headline KPIs</div><h2>Disbursement snapshot</h2><div class="cards"><div><small>Successful credit disbursements</small><strong>__COUNT__</strong></div><div><small>Total disbursed amount</small><strong>__TOTAL__</strong></div><div><small>Transaction success rate</small><strong>__RATE__</strong></div><div><small>Clean transactions</small><strong>__ROWS__</strong></div></div><p>Transaction success rate includes both credits and debits; it is not the disbursement success rate.</p></section>
+<section class="slide"><div class="tag">03 · Time trend</div><h2>When was disbursement volume highest?</h2><p class="big">__PEAK__</p><p>Review month-to-month changes alongside policy, seasonality and operating context before assigning causes.</p><div class="chart"><img src="loan_disbursement_trends.png" alt="Monthly disbursement trend chart"></div></section>
+<section class="slide"><div class="tag">04 · Product mix</div><h2>Successful disbursements by loan type</h2><table><thead><tr><th>Loan type</th><th>Count</th><th>Amount</th></tr></thead><tbody>__TYPE_ROWS__</tbody></table><p>Compare counts as well as amounts; larger average ticket size can shift total volume.</p></section>
+<section class="slide"><div class="tag">05 · Method and quality</div><h2>Reproducible, transaction-level analysis</h2><ul><li>Parsed dates and numeric amounts; normalized labels and flags</li><li>Removed duplicate transaction IDs and rows with invalid required values</li><li>Produced monthly, loan-type, branch and channel summaries</li><li>Kept synthetic sample data clearly labeled</li></ul><p class="callout">Delinquency is only a sample transaction-level flag here. A portfolio delinquency rate requires validated loan status history and a defined aging threshold.</p></section>
+<section class="slide"><div class="tag">06 · Recommended next steps</div><h2>Turn the trends into decisions</h2><ol><li>Validate the credit-to-disbursement mapping with operations.</li><li>Review failed reasons by branch and channel to target process improvements.</li><li>Replace synthetic records with an approved, privacy-safe dataset.</li><li>Add loan booking, reversals and dated delinquency status for portfolio KPIs.</li></ol><p class="callout">Illustrative synthetic data has no real-world evidentiary value.</p></section>'''
+    slide = (slide.replace("__COUNT__", f"{count:,}").replace("__TOTAL__", f"INR {total:,.0f}")
+             .replace("__RATE__", f"{rate:.1f}%").replace("__ROWS__", f"{len(df):,}")
+             .replace("__PEAK__", peak_text).replace("__TYPE_ROWS__", type_rows))
+    html = '''<!doctype html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>D17 Loan Disbursement — Presentation</title><style>
+*{box-sizing:border-box}body{margin:0;background:#101a2d;color:#162a45;font:20px Arial,sans-serif}.slide{display:none;position:relative;background:#fff;width:min(1100px,94vw);height:min(700px,88vh);margin:5vh auto;padding:7% 8%;border-radius:18px;box-shadow:0 20px 70px #0006;overflow:auto}.slide.active{display:block}.title{background:linear-gradient(135deg,#fff 65%,#dcecff)}.tag{color:#2672b8;text-transform:uppercase;font-weight:bold;font-size:14px;letter-spacing:1px}h1{font-size:clamp(42px,7vw,74px);line-height:1.05;margin:13% 0 20px}h2{font-size:clamp(30px,4vw,46px);margin:20px 0 30px}p,li{line-height:1.55}li{margin:13px 0}.title small{display:block;color:#65758b;margin-top:50px}.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;margin:30px 0}.cards div{background:#f0f5fb;border-radius:12px;padding:22px}.cards small{display:block;color:#61728a}.cards strong{display:block;font-size:clamp(23px,3vw,36px);margin-top:12px}.big{font-size:42px;font-weight:bold;color:#11735f}.callout{background:#eef5fc;border-left:5px solid #2672b8;padding:17px;margin-top:28px}.chart{height:300px}.chart img{width:100%;height:100%;object-fit:contain}table{border-collapse:collapse;width:100%;margin:25px 0}td,th{text-align:left;border-bottom:1px solid #dbe3ed;padding:14px}footer{position:fixed;bottom:15px;left:0;right:0;text-align:center;color:#dce7f6;font-size:13px}.controls{position:fixed;right:22px;top:15px;color:white}button{padding:10px 16px;border:0;border-radius:7px;margin-left:8px;cursor:pointer}@media(max-height:650px){.slide{height:82vh;padding:4% 6%}.chart{height:220px}}
+</style></head><body>__SLIDES__<div class="controls"><button onclick="move(-1)">←</button><span id="counter"></span><button onclick="move(1)">→</button></div><footer>Use ← / → keys to navigate · D17 Loan Disbursement Trend Analysis</footer><script>const s=[...document.querySelectorAll('.slide')];let i=0;function show(){s.forEach((x,n)=>x.classList.toggle('active',n===i));document.getElementById('counter').textContent=(i+1)+' / '+s.length}function move(d){i=(i+d+s.length)%s.length;show()}document.addEventListener('keydown',e=>{if(e.key==='ArrowRight'||e.key===' '){move(1)}if(e.key==='ArrowLeft'){move(-1)}});show()</script></body></html>'''.replace("__SLIDES__", slide)
+    (OUTPUT_DIR / "presentation.html").write_text(html, encoding="utf-8")
+
+
 def run(input_path: Path | None = None, rows: int = 12000) -> dict:
     DATA_DIR.mkdir(exist_ok=True)
     OUTPUT_DIR.mkdir(exist_ok=True)
@@ -270,6 +295,7 @@ def run(input_path: Path | None = None, rows: int = 12000) -> dict:
     create_visuals(df, tables)
     create_dashboard(df, tables)
     write_report(df, tables, metadata)
+    create_presentation(df, tables)
     (OUTPUT_DIR / "data_quality.json").write_text(json.dumps(metadata, indent=2), encoding="utf-8")
     return {"data": df, "tables": tables, "metadata": metadata}
 
