@@ -1,48 +1,42 @@
-# Loan Disbursement Trend Analysis — Insight Report
+# D17 - Loan Disbursement Trend Analysis: Insight Report
 
-**Project D17 | Banking & Finance | ABES Engineering College, MCA 2nd Year**  
-**Skill track:** Data Analyst  
-**Analysis period:** Jan 2021–Dec 2025  
-**Data:** synthetic and illustrative; not actual customer or bank records.
+**ABES Engineering College | MCA 2nd Year | Data Analyst**  
+**Learner:** Vansh Varshney | **Roll:** 2500320140161 | **Mentor:** Kalpana Dwivedi  
+**Data:** Synthetic only | **Period:** 2021-01-01 to 2025-12-31 | **Seed:** 42
 
 ## Executive summary
 
-The cleaned dataset contains **12,000 transactions** (0 rows removed during cleaning). It includes **4,491 successful credit disbursements** totaling **INR 8,289,387,587**. The transaction-level success rate is **97.8%**.
+The generated dataset has **12,000 valid synthetic transaction events** and **0 rejected rows**. It contains **4,132 successful disbursement events** totaling **INR 7,279,333,054.33**. Transaction success rate is **97.79%**; disbursement-attempt success rate is **96.41%**.
 
-## Key findings
+## Descriptive findings
 
-- Peak month by amount: **February 2025**, INR 205,004,681.
-- Largest loan type by disbursed amount: **Home** (INR 4,223,767,990, 51.0% of total).
-- Successful disbursement count is used as a proxy for loans disbursed because the suggested schema does not include a separate loan approval or loan booking event.
-- Delinquency flag rates describe flagged transactions in this illustrative dataset. A loan-level delinquency rate should be calculated from a validated loan status and an agreed delinquency definition.
+- Highest monthly successful disbursement amount in this generated sample: **May 2025 (INR 187,898,932)**.
+- Highest loan-type amount in this sample: **Home (INR 3,588,918,562)**.
+- Highest branch amount in this sample: **South Branch 07 (INR 337,643,700)**.
+- The chart and filters support comparison by date, loan type, branch, channel and status.
 
-### Disbursed amount by loan type
-
-- **Home:** INR 4,223,767,990 across 984 successful credits.
-- **Business:** INR 1,956,848,837 across 638 successful credits.
-- **Vehicle:** INR 1,186,365,165 across 900 successful credits.
-- **Education:** INR 562,364,817 across 551 successful credits.
-- **Personal:** INR 360,040,778 across 1,418 successful credits.
+These are descriptive outputs of the specified random generator, not findings about an actual bank, customer base, or market.
 
 ## KPI definitions
 
-- **Disbursed amount:** sum of `amount` for rows where `transaction_type = credit` and `status = success`.
-- **Disbursement count:** count of those successful credit rows.
-- **Average disbursement:** disbursed amount divided by disbursement count.
-- **Transaction success rate:** all successful transaction rows divided by all cleaned transaction rows. It is not the disbursement success rate.
-- **Delinquency flag:** count/rate of rows with `delinquency_flag = true`; interpret cautiously at transaction grain.
+- **Successful disbursed amount:** sum of `amount` where `event_type=disbursement` and `status=success`.
+- **Disbursement event count:** count of those successful events; not necessarily distinct loans.
+- **Average disbursement:** amount divided by successful disbursement event count.
+- **Transaction success rate:** successful transactions divided by all selected transactions.
+- **Disbursement-attempt success rate:** successful disbursement events divided by all disbursement attempts.
+- **Failed disbursement amount:** failed disbursement attempt amount, displayed separately from funded amount.
 
-## Data preparation
+## Data preparation and quality
 
-Parsed transaction dates and numeric amounts, normalized category labels, removed duplicate transaction IDs, excluded rows missing required fields or with invalid amounts/status/type, and cleared failure reasons for successful records. **12,000 input rows** became **12,000 clean rows**.
+Rows checked: 12,000; valid: 12,000; rejected: 0. The generator/validator checks required fields, parsing, category values, event-direction consistency, positive amounts, duplicate transaction IDs, stable entity mappings and relationship consistency. Seed/version metadata is saved in `outputs/data_quality.json`.
 
-## Recommendations
+## Recommendations for a real analysis
 
-1. Compare monthly disbursed amounts and counts by loan type; investigate major shifts with business context before attributing causes.
-2. Review failed transaction reasons and branch/channel patterns to identify operational follow-up areas.
-3. Replace sample data with approved, privacy-safe source data and validate definitions with the business owner.
-4. Add a stable loan-level disbursement event and dated delinquency status to support loan-level conversion and portfolio quality measures.
+1. Confirm the event-system definition of disbursement and reversal netting before interpreting any total.
+2. Replace synthetic data only with an authorized, privacy-safe dataset and preserve lineage/quality checks.
+3. Define delinquency with an agreed loan-level grain and days-past-due threshold before reporting risk measures.
+4. Review observed failure patterns with business owners; do not infer causes from these generated records.
 
 ## Limitations
 
-The sample data is generated for demonstration and has no real-world evidentiary value. The schema does not define approved amounts, unique loan origination events, reversals, or a delinquency aging threshold. A credit transaction is treated as a disbursement for this project; real deployments must validate that mapping.
+This dataset is synthetic, seeded, and intentionally illustrative. INR is an assumption. Gross disbursement totals exclude reversal netting. Sample loan flags have no arrears aging definition. No causal, predictive, approval, or creditworthiness inference is supported.

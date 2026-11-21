@@ -1,0 +1,29 @@
+{
+  "python": "3.14.3",
+  "sample_rows": 12000,
+  "quality": {
+    "input_rows": 12000,
+    "valid_rows": 12000,
+    "rejected_rows": 0
+  },
+  "seed": 42,
+  "date_start": "2021-01-01",
+  "date_end": "2025-12-31",
+  "kpis": {
+    "disbursed_amount": 7279333054.33,
+    "disbursement_count": 4132,
+    "average_disbursement": 1761697.2541940948,
+    "failed_disbursement_amount": 261811206.73999998,
+    "transaction_success_rate": 97.79166666666667,
+    "disbursement_success_rate": 96.40690620625291,
+    "flagged_loan_share": 7.782250335441825,
+    "transaction_count": 12000
+  },
+  "timings_seconds": {
+    "validation": 0.36,
+    "sqlite_initialize_and_load": 1.526,
+    "sqlite_read": 0.287,
+    "filtered_metrics_and_aggregates": 0.097,
+    "app_overview_render": 3.398
+  }
+}

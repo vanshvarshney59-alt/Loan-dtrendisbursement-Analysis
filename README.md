@@ -1,58 +1,50 @@
-# D17 — Loan Disbursement Trend Analysis
+# D17 - Loan Disbursement Trend Analysis
 
-**ABES Engineering College | MCA 2nd Year | Data Analyst skill track**  
-An end-to-end, reproducible analysis of loan disbursement transactions using pandas, NumPy, Matplotlib, Seaborn, Plotly, and Jupyter/Colab. CSV summaries are prepared for Power BI or Tableau.
+**ABES Engineering College | MCA 2nd Year | Data Analyst | Banking & Finance**  
+**Learner:** Vansh Varshney, Roll No. 2500320140161 | **Mentor:** Kalpana Dwivedi
 
-**Suggested duration:** 40 hours across 3 sprints · **Primary users:** Branch Manager and Risk & Operations Head.
+Academic analytics project built with Python, pandas, NumPy, Streamlit, SQLite, Plotly, pytest, and a locally bundled Tailwind-compatible style sheet. All records are synthetic. This app is a descriptive demonstration and must not be used for lending or borrower decisions.
 
-## Dataset and definitions
-
-Without `--input`, the project generates 12,000 synthetic transaction records for 2021–2025. The data is illustrative and does not represent real customers or a real lender. Fields follow the project brief: transaction/customer/account/branch IDs, transaction date/type, channel, amount, status/failure reason, loan ID/type, and delinquency flag. `event_type` is an additional convenience field in the generated sample.
-
-For this project, a **successful disbursement** is a transaction with `transaction_type=credit` and `status=success`. The brief's suggested fields do not include a distinct booking event, so this mapping should be validated against real source systems. Delinquency is shown as a sample transaction-level flag, not as a validated loan-level portfolio measure.
-
-Required CSV columns: `transaction_id`, `transaction_date`, `customer_id`, `account_id`, `account_type`, `branch_id`, `transaction_type` (`credit`/`debit`), `channel`, `amount`, `status` (`success`/`failed`), `loan_id`, `loan_type`, `delinquency_flag`. `failure_reason` is optional.
-
-## Run
+## Quick start
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
+python -m pip install -r requirements-dev.txt
 python loan_trend_analysis.py
+streamlit run app.py
 ```
 
-Analyze an approved CSV instead:
+The generator creates 12,000 deterministic synthetic transaction events (seed 42, dates 2021-01-01 through 2025-12-31). The Streamlit app creates/loads `data/loan_trend_analysis.db` and starts at the dashboard. To change the sample size/seed, run `python loan_trend_analysis.py --rows 12000 --seed 42`.
+
+## Verify
 
 ```powershell
-python loan_trend_analysis.py --input path\to\transactions.csv
+python -m pytest -q
+python -m coverage run -m pytest
+python -m coverage report
 ```
 
-The notebook at `notebooks/loan_disbursement_analysis.ipynb` documents loading, cleaning, EDA, KPIs, and findings. Run it in Jupyter or upload it to Google Colab. It uses the project module and sample CSV; for Colab, upload both the notebook and `loan_trend_analysis.py`, or place the module beside the notebook.
+Core modules are in `loan_app/`: `data.py` generation/validation, `database.py` SQLite repository, and `analytics.py` filters/KPIs/aggregates. The notebook in `notebooks/loan_disbursement_analysis.ipynb` reproduces the core exploration.
 
-## Deliverables
+## Data semantics
 
-- `data/loan_transactions_sample.csv` — generated sample transactions.
-- `data/loan_transactions_clean.csv` — cleaned, analysis-ready transactions.
-- `outputs/monthly_summary.csv`, `loan_type_summary.csv`, `branch_summary.csv`, `channel_summary.csv` — BI-ready aggregates.
-- `outputs/loan_disbursement_trends.png` — static EDA chart.
-- `outputs/loan_disbursement_dashboard.html` — filterable dashboard with year, loan type, branch, and channel filters.
-- `outputs/insight_report.md` — KPIs, findings, recommendations, cleaning notes, and limitations.
-- `outputs/presentation.html` — browser-ready slide presentation; use arrow keys to navigate.
-- `outputs/data_quality.json` — input/cleaned row counts and source metadata.
+One CSV row is a transaction event. `event_type` is `disbursement`, `repayment`, or `reversal`; `transaction_type` is credit/debit and does not alone define a disbursement. The headline funded metric includes only `event_type=disbursement` and `status=success`. Failed attempts and reversals are kept separate. A disbursement event count is not necessarily a distinct loan count.
 
-## KPIs
+The seed and category distributions are illustrative, not calibrated to a real lender. The sample loan delinquency flag is fictional and has no aging/days-past-due definition. Currency is displayed as INR under assumption A-006; confirm if the academic brief expects another unit.
 
-- Disbursed amount = sum of successful credit transaction amounts.
-- Disbursement count = number of successful credit transactions.
-- Average disbursement = disbursed amount / disbursement count.
-- Transaction success rate = successful transactions / all cleaned transactions.
-- Delinquency flag rate = flagged transactions / transactions; interpret with care because the suggested schema is not loan-status history.
+## Project deliverables
 
-## Power BI / Tableau
+- `01_Project_Understanding.docx` and `deliverables/source/01_Project_Understanding.md` - Step 1.
+- `deliverables/02_*.docx` through `deliverables/18_*.docx` - Steps 2-18, with the RTM as Excel at Step 4.
+- `deliverables/04_Requirements_Traceability_Matrix.xlsx` - requirement-to-test/task links.
+- `deliverables/18_ABES_Slide_Deck.pptx` - final slide deck; also a Word storyboard.
+- `outputs/` - run-specific summaries, quality metadata, test/smoke evidence and reports.
 
-Import the four summary CSVs for quick charts, or import the clean transaction CSV for interactive slicing. Suggested visuals: monthly disbursed amount and count, loan-type and branch comparisons, channel split, success rate, and a delinquency-flag count. Set `transaction_date`/`month` to date types and format amounts as INR. The standalone HTML dashboard already has filters if no BI tool is available.
+## Streamlit Community Cloud
 
-## Git handoff
+The app entry point is `app.py`; `requirements.txt` and `.streamlit/config.toml` are at repository root. Push to a GitHub repository owned/authorized by the learner, connect it in Streamlit Community Cloud, select the repository/branch and `app.py`, select a compatible Python version, then deploy and smoke-test. Cloud's requirements file is expected alongside the app or at repository root; see [Streamlit dependency guidance](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/app-dependencies) and [deployment steps](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy). Deployment requires repository access/permissions; do not share credentials in chat. SQLite local file persistence on the hosted instance is not guaranteed, so the app reloads the synthetic sample if no active dataset is present.
 
-Repository name from the brief: `mca2-da-loan-disbursement-trend-analysis`. Add the project files, notebook, report, and generated sample/clean CSVs; commit and tag a release after review. Do not include real customer information or credentials.
+## Local Git
+
+Repository was initialized in this folder. Commit and tag history are local until a remote is configured. Repository name requested by the academic brief: `mca2-da-loan-disbursement-trend-analysis`.

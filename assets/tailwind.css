@@ -1,0 +1,11 @@
+/* Bundled Tailwind-compatible utility tokens. No runtime CDN dependency. */
+:root { --navy:#17365d; --blue:#2563eb; --teal:#0f766e; --ink:#24364b; --muted:#64748b; --surface:#ffffff; --canvas:#f4f7fb; }
+.stApp { background:var(--canvas); color:var(--ink); }
+[data-testid="stSidebar"] { background:#eef3f9; }
+[data-testid="stSidebar"] h1 { color:var(--navy); font-size:1.35rem; }
+[data-testid="stMetric"] { background:var(--surface); border:1px solid #dce5ef; padding:1rem; border-radius:.85rem; box-shadow:0 2px 8px rgba(23,54,93,.05); }
+[data-testid="stMetricLabel"] { color:var(--muted); }
+[data-testid="stMetricValue"] { color:var(--navy); }
+.synthetic-banner { background:#eaf4ff; border:1px solid #bfdbfe; border-left:5px solid var(--blue); color:#17365d; padding:.75rem 1rem; border-radius:.6rem; margin:.5rem 0 1rem; }
+div[data-testid="stDataFrame"] { border:1px solid #dce5ef; border-radius:.65rem; }
+button[kind="primary"] { background:var(--blue); }

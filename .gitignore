@@ -3,3 +3,9 @@ __pycache__/
 *.py[cod]
 .mplconfig/
 .ipynb_checkpoints/
+data/*.db
+data/*.db-shm
+data/*.db-wal
+.coverage
+htmlcov/
+.pytest_cache/
