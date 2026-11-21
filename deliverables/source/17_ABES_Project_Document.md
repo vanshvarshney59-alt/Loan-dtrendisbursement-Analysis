@@ -58,7 +58,7 @@ These are outputs of the synthetic generator; they are not real-world business f
 
 ## 10. Deployment
 
-Target is Streamlit Community Cloud. Configuration and instructions are in Step 16. No cloud URL is claimed: SH-001 has not supplied an authorized GitHub remote or account access. Streamlit's documented process selects a GitHub repository, branch and entrypoint, with declared dependencies; see the official [deployment guide](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy). Hosted SQLite is treated as ephemeral and sample reload behavior is documented.
+The application is published on Streamlit Community Cloud: [Open the live Loan Disbursement Trend Analysis dashboard](https://loan-dtrendisbursement-analysis-eptjqtxqqd2gt8uwxvpln7.streamlit.app/). Deployment configuration and operating notes are in Step 16. Streamlit Community Cloud deployment selects a GitHub repository, branch and entrypoint, with dependencies declared in the project; see the official [deployment guide](https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy). Hosted SQLite is treated as ephemeral and sample reload behavior is documented.
 
 ## 11. Limitations and future work
 
@@ -66,11 +66,12 @@ Synthetic data; event mapping is not validated against a bank; no causal analysi
 
 ## 12. Conclusion
 
-D17 provides a transparent academic demonstration of transaction-grain loan disbursement analytics. Its contribution is reproducibility and disciplined definitions, not claims about lender performance. Final academic submission requires applying the official ABES template if available and mentor review; publishing additionally requires owner-authorized Cloud account and repository.
+D17 provides a transparent academic demonstration of transaction-grain loan disbursement analytics. Its contribution is reproducibility and disciplined definitions, not claims about lender performance. Final academic submission requires applying the official ABES template if available and mentor review. The live dashboard URL is listed in Section 10.
 
 ## References and appendices
 
 - Streamlit Community Cloud deployment: https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/deploy
 - Streamlit app dependency setup: https://docs.streamlit.io/deploy/streamlit-community-cloud/deploy-your-app/app-dependencies
 - Appendices: RTM, data dictionary, ER model, test cases/results, UI views, deployment checklist and slide deck.
+
 
