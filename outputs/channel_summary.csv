@@ -1,0 +1,5 @@
+channel,transactions,disbursement_count,disbursed_amount,successful_transactions,delinquent_transactions,success_rate_pct,delinquency_rate_pct
+Net Banking,4548,1703,3204590310.19,4443,364,97.69,8.0
+UPI,3448,1279,2285562841.72,3385,277,98.17,8.03
+Branch,2578,990,1876763320.65,2517,200,97.63,7.76
+ATM,1426,519,922471114.16,1393,112,97.69,7.85

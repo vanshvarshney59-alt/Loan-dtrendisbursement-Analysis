@@ -1,0 +1,6 @@
+loan_type,transactions,disbursement_count,disbursed_amount,successful_transactions,delinquent_transactions,success_rate_pct,delinquency_rate_pct
+Home,2622,984,4223767990.17,2567,193,97.9,7.36
+Business,1698,638,1956848836.54,1659,210,97.7,12.37
+Vehicle,2403,900,1186365165.13,2351,160,97.84,6.66
+Education,1485,551,562364817.27,1444,118,97.24,7.95
+Personal,3792,1418,360040777.61,3717,272,98.02,7.17
