@@ -283,7 +283,7 @@ def add_slide(prs, number, title, bullets, callout=None, image_path=None, image_
     tf = box.text_frame; tf.word_wrap = True; tf.margin_left = PptInches(.1); tf.margin_right = PptInches(.1)
     for i, bullet in enumerate(bullets):
         para = tf.paragraphs[0] if i == 0 else tf.add_paragraph()
-        para.text = "• " + bullet; para.level = 0; para.font.name = "Aptos"; para.font.size = PptPt(19); para.font.color.rgb = PPTColor(36,54,75)
+        para.text = bullet; para.level = 0; para.font.name = "Aptos"; para.font.size = PptPt(19); para.font.color.rgb = PPTColor(36,54,75)
         para.space_after = PptPt(14); para.bullet = True
     if callout:
         y = PptInches(6.2)
@@ -312,8 +312,8 @@ def build_pptx() -> None:
         ("KPI definitions", ["Successful disbursed amount = sum of successful disbursement event amounts.", "Disbursement count = successful event count.", "Transaction success rate includes every selected event type.", "Disbursement attempt success rate uses disbursement attempts only.", "Sample delinquency flag has no days-past-due definition."], None),
         ("Trend results | synthetic sample", ["Seed 42 · 12,000 valid events · 2021-01-01 to 2025-12-31.", "4,132 successful disbursement events.", "Total amount: INR 7,279,333,054.33.", "Highest generated month: May 2025, INR 187,898,932.46."], "These are generator outputs, not observed business behavior.", trend),
         ("Loan-type mix | synthetic sample", ["Home: INR 3,588,918,561.66 across 840 events.", "Business: INR 1,731,591,218.16 across 573 events.", "Vehicle: INR 1,136,144,487.98 across 875 events.", "The generator assigns different ticket ranges by type; totals are not evidence of demand."], "Compare amount and count together; do not infer product quality.", product),
-        ("Data quality and verification", ["12,000 input rows; 12,000 valid; 0 rejected.", "13 automated tests passed; core-module coverage 92%.", "All six Streamlit views rendered in the headless AppTest smoke check.", "Local overview render 3.398 seconds; filtered calculations 0.097 seconds."], "One third-party pytest deprecation warning remains."),
-        ("Deployment and limitations", ["Prepared for Streamlit Community Cloud; no published URL is claimed.", "Deployment needs an owner-authorized GitHub repository and account.", "Hosted SQLite storage may be ephemeral; app reloads the sample if missing.", "No authentication, production SLA, live data or validated risk measures."], "Follow Streamlit's official deployment guide after repository access is ready."),
+        ("Data quality and verification", ["12,000 input rows; 12,000 valid; 0 rejected.", "14 automated tests passed; core-module coverage 92%.", "All six Streamlit views rendered in the headless AppTest smoke check.", "Local overview render 3.398 seconds; filtered calculations 0.097 seconds."], "One third-party pytest deprecation warning remains."),
+        ("Deployment and limitations", ["Published on Streamlit Community Cloud.", "Live app: loan-dtrendisbursement-analysis-eptjqtxqqd2gt8uwxvpln7.streamlit.app", "Hosted SQLite storage may be ephemeral; app reloads the sample if missing.", "No authentication, production SLA, live data or validated risk measures."], "Use the live app link for the deployed academic demonstration."),
         ("Recommendations and close", ["Validate event mapping and reversal handling with a domain owner.", "Use real records only with authorization and privacy review.", "Define loan-level delinquency and aging before risk reporting.", "Review actual failure patterns only after the source data is validated.", "Thank you."], "Questions welcome"),
     ]
     for index, slide in enumerate(slides, 1):

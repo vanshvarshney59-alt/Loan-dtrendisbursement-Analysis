@@ -47,4 +47,10 @@ The app entry point is `app.py`; `requirements.txt` and `.streamlit/config.toml`
 
 ## Local Git
 
-Repository was initialized in this folder. Commit and tag history are local until a remote is configured. Repository name requested by the academic brief: `mca2-da-loan-disbursement-trend-analysis`.
+The project is published in the learner's GitHub repository on branch `master` with release tag `d17-v1.0.0`.
+
+## Published project links
+
+- Live Streamlit dashboard: https://loan-dtrendisbursement-analysis-eptjqtxqqd2gt8uwxvpln7.streamlit.app/
+- GitHub repository: https://github.com/vanshvarshney59-alt/Loan-dtrendisbursement-Analysis
+- Submission PDFs and synthetic data bundle: see deliverables/.

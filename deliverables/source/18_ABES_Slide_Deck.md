@@ -46,7 +46,7 @@ Home has the largest generated amount: INR 3,588,918,561.66 across 840 successfu
 
 ## Slide 11 - Deployment and limitations
 
-Target Streamlit Community Cloud; no live URL because account and authorized repository were not supplied. SQLite file persistence may be ephemeral. Limitations: synthetic data, no validated delinquency aging, no live bank, no production SLA or user authentication. Follow official Streamlit deployment steps once the learner owns/connects the repository.
+Published on Streamlit Community Cloud: [Open the live Loan Disbursement Trend Analysis dashboard](https://loan-dtrendisbursement-analysis-eptjqtxqqd2gt8uwxvpln7.streamlit.app/). SQLite file persistence may be ephemeral. Limitations: synthetic data, no validated delinquency aging, no live bank, no production SLA or user authentication.
 
 ## Slide 12 - Recommendations and close
 
@@ -55,4 +55,5 @@ Validate event mapping; replace synthetic records only with authorized privacy-s
 ## Speaker guidance
 
 Target 8-10 minutes. Explain why disbursement amount is not event count, transaction success or distinct loan count. Demonstrate a filter. State limitations before interpreting peak month or product mix. The slide deck is an academic draft and must be transferred to the official ABES template if required.
+
 
